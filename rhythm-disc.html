@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rhythm Disc — Jack He</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Noto+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cyan: #00E5FF;
+      --pink: #FF3366;
+      --yellow: #FFE600;
+      --purple: #7209B7;
+      --ink: #1a1a1a;
+      --off-white: #F5F0E8;
+      --card-bg: #ffffff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--off-white);
+      color: var(--ink);
+      font-family: 'Noto Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 40px;
+      background: var(--ink);
+      border-bottom: 3px solid var(--cyan);
+    }
+    nav .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem; letter-spacing: 0.1em;
+      color: var(--cyan);
+    }
+    nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem; color: var(--off-white);
+      text-decoration: none; letter-spacing: 0.05em;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    nav a:hover { color: var(--cyan); border-color: var(--cyan); }
+
+    /* ── HERO ── */
+    #hero {
+      margin-top: 60px;
+      min-height: 60vh;
+      background: var(--ink);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 80px 40px 60px;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 4px solid var(--cyan);
+    }
+    #hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent, transparent 40px,
+        rgba(0,229,255,0.04) 40px, rgba(0,229,255,0.04) 41px
+      );
+    }
+    .hero-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.2em;
+      color: var(--cyan); text-transform: uppercase;
+      background: rgba(0,229,255,0.1);
+      border: 1px solid var(--cyan);
+      padding: 4px 14px; border-radius: 2px;
+      margin-bottom: 24px;
+    }
+    #hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.5rem, 10vw, 7rem);
+      letter-spacing: 0.04em;
+      color: #fff;
+      line-height: 0.95;
+      margin-bottom: 8px;
+    }
+    #hero h1 span { color: var(--cyan); }
+    .hero-subtitle {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.85rem; color: rgba(255,255,255,0.5);
+      margin-top: 20px; letter-spacing: 0.1em;
+    }
+    .hero-roles {
+      display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;
+      margin-top: 28px;
+    }
+    .role-chip {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.1em;
+      padding: 5px 14px; border-radius: 2px;
+      background: transparent; border: 1.5px solid;
+      text-transform: uppercase;
+    }
+    .role-chip.c { border-color: var(--cyan); color: var(--cyan); }
+    .role-chip.p { border-color: var(--pink); color: var(--pink); }
+    .role-chip.y { border-color: var(--yellow); color: var(--yellow); }
+
+    /* ── QUOTE ── */
+    .quote-banner {
+      background: var(--pink);
+      padding: 28px 40px;
+      text-align: center;
+      border-bottom: 3px solid var(--ink);
+    }
+    .quote-banner p {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      letter-spacing: 0.05em;
+      color: #fff;
+    }
+
+    /* ── MAIN CONTENT ── */
+    main { max-width: 1000px; margin: 0 auto; padding: 80px 40px 120px; }
+
+    /* section label */
+    .section-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.2em;
+      color: var(--pink); text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      letter-spacing: 0.04em;
+      color: var(--ink);
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 3px solid var(--ink);
+    }
+
+    section { margin-bottom: 80px; }
+
+    p { font-size: 1rem; line-height: 1.8; color: #333; margin-bottom: 16px; }
+    strong { color: var(--ink); font-weight: 600; }
+
+    /* ── IMAGE PLACEHOLDER ── */
+    .img-block {
+      width: 100%;
+      margin: 32px 0;
+      border: 2px solid var(--ink);
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+    .img-block img {
+      width: 100%; display: block;
+    }
+    .img-placeholder {
+      background: #e8e4dc;
+      padding: 60px 40px;
+      text-align: center;
+    }
+    .img-placeholder .img-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem; letter-spacing: 0.15em;
+      color: #888; text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .img-placeholder .img-desc {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem; color: #aaa;
+    }
+    .img-caption {
+      background: var(--ink);
+      color: rgba(255,255,255,0.7);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.1em;
+      padding: 8px 16px;
+    }
+
+    /* ── MECHANICS GRID ── */
+    .mechanic-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      border: 2px solid var(--ink);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 32px 0;
+    }
+    .mechanic-card {
+      padding: 28px 24px;
+      position: relative;
+    }
+    .mechanic-card:nth-child(1) { background: #E8F7FF; border-right: 2px solid var(--ink); }
+    .mechanic-card:nth-child(2) { background: #1a1a1a; border-right: 2px solid var(--ink); }
+    .mechanic-card:nth-child(3) { background: #FFF3E0; }
+    .mechanic-card .m-icon {
+      font-size: 2rem; margin-bottom: 12px; display: block;
+    }
+    .mechanic-card .m-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem; letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+    .mechanic-card:nth-child(1) .m-name { color: #0077AA; }
+    .mechanic-card:nth-child(2) .m-name { color: var(--cyan); }
+    .mechanic-card:nth-child(3) .m-name { color: #CC4400; }
+    .mechanic-card .m-desc {
+      font-size: 0.85rem; line-height: 1.6;
+      margin-bottom: 0;
+    }
+    .mechanic-card:nth-child(1) .m-desc { color: #444; }
+    .mechanic-card:nth-child(2) .m-desc { color: rgba(255,255,255,0.7); }
+    .mechanic-card:nth-child(3) .m-desc { color: #444; }
+
+    /* ── TECH LIST ── */
+    .tech-list {
+      list-style: none;
+      border: 2px solid var(--ink);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 24px 0;
+    }
+    .tech-list li {
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 20px 24px;
+      border-bottom: 1.5px solid #ddd;
+      font-size: 0.95rem; line-height: 1.6; color: #333;
+    }
+    .tech-list li:last-child { border-bottom: none; }
+    .tech-list li::before {
+      content: attr(data-num);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem; color: var(--purple);
+      flex-shrink: 0; line-height: 1.2;
+    }
+    .tech-list li strong { color: var(--ink); display: block; margin-bottom: 2px; }
+
+    /* ── VIDEO SECTION ── */
+    .video-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 32px;
+    }
+    @media (max-width: 600px) { .video-grid { grid-template-columns: 1fr; } }
+    .video-card {
+      border: 2px solid var(--ink);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .video-card .v-label {
+      background: var(--ink);
+      padding: 10px 16px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.6); text-transform: uppercase;
+    }
+    .video-card .v-title {
+      padding: 14px 16px 4px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem; letter-spacing: 0.04em;
+      color: var(--ink);
+    }
+    .video-card .v-btn {
+      display: block; margin: 12px 16px 16px;
+      background: var(--pink); color: #fff;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem; letter-spacing: 0.1em;
+      text-decoration: none; text-align: center;
+      padding: 10px 20px; border-radius: 2px;
+      border: 2px solid var(--ink);
+      transition: background 0.2s, transform 0.1s;
+    }
+    .video-card .v-btn:hover { background: #cc2255; transform: translateY(-1px); }
+    .video-card.behind .v-btn { background: var(--purple); }
+    .video-card.behind .v-btn:hover { background: #5a0090; }
+    .video-card.full { grid-column: 1 / -1; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      main { padding: 60px 20px 80px; }
+      .mechanic-grid { grid-template-columns: 1fr; }
+      .mechanic-card:nth-child(1),
+      .mechanic-card:nth-child(2) { border-right: none; border-bottom: 2px solid var(--ink); }
+      nav { padding: 14px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">Jack He</div>
+    <a href="index.html">← Back to Home</a>
+  </nav>
+
+  <header id="hero">
+    <div class="hero-tag">Game Design Project · 2024</div>
+    <h1>Rhythm<br><span>Disc</span></h1>
+    <p class="hero-subtitle">Solitaire · Electronic Shooting · Music</p>
+    <div class="hero-roles">
+      <span class="role-chip c">Game Design</span>
+      <span class="role-chip p">Programming</span>
+      <span class="role-chip y">Audio Design</span>
+    </div>
+  </header>
+
+  <div class="quote-banner">
+    <p>"A game that reverses the usual shooter design — giving players the real-world experience of being a DJ."</p>
+  </div>
+
+  <main>
+
+    <!-- 01 CONCEPT -->
+    <section>
+      <div class="section-num">01 — Concept</div>
+      <div class="section-title">Reversing Roles & Boundaries</div>
+
+      <p>Inspired by <em>The Art of Game Design</em>, I wanted to break the conventional rule where the player only controls the protagonist. In most shooters, you are the hero — but what if you controlled everything <strong>around</strong> the hero instead?</p>
+      <p>In Rhythm Disc, the player controls the turntable (the environment) and the instrument monsters in the scene, while indirectly helping the main character survive. The core tension comes from managing both the music and the battlefield at the same time.</p>
+
+      <!-- IMAGE: PDF Page 3 — Brainstorm diagram (Key element map + Reversing Roles illustration) -->
+      <div class="img-block">
+        <img src="brainstorm.jpg" alt="描述">
+        </div>
+        <div class="img-caption">Brainstorming map</div>
+      </div>
+    </section>
+
+    <!-- 02 MUSIC MECHANIC -->
+    <section>
+      <div class="section-num">02 — Core Mechanic</div>
+      <div class="section-title">The Music System</div>
+
+      <p>The game's setting is a disc player. Monsters are designed after musical instruments — Piano, Guitar, and Drum — each corresponding to a different zone on the turntable. As the player moves through zones, the matching instrument track becomes dominant and a different bullet type is activated.</p>
+
+      <div class="mechanic-grid">
+        <div class="mechanic-card">
+          <span class="m-icon">🎹</span>
+          <div class="m-name">Piano Zone</div>
+          <p class="m-desc">Soft color palette. Gentle rhythm. Enemies move slower — but don't let your guard down.</p>
+        </div>
+        <div class="mechanic-card">
+          <span class="m-icon">🥁</span>
+          <div class="m-name">Drum Zone</div>
+          <p class="m-desc">Fierce orange-red tones. High-intensity beat. Enemy spawn rate spikes dramatically.</p>
+        </div>
+        <div class="mechanic-card">
+          <span class="m-icon">🎸</span>
+          <div class="m-name">Guitar Zone</div>
+          <p class="m-desc">Tough and edgy. Mid-tempo chaos. Enemies hit harder and require precise timing.</p>
+        </div>
+      </div>
+
+      <!-- IMAGE: PDF Page 4 — Art display (Scene art + Monster design + Chsracter design) -->
+      <div class="img-block">
+        <img src="art.jpg" alt="描述">
+        <div class="img-caption">Art display</div>
+      </div>
+    </section>
+
+    <!-- 03 PROGRAMMING -->
+    <section>
+      <div class="section-num">03 — Programming</div>
+      <div class="section-title">How It Works</div>
+
+      <p>All core systems were built in Unity (C#). The most technically interesting part was synchronizing enemy spawning with actual music beats in real time.</p>
+
+      <ul class="tech-list">
+        <li data-num="01">
+          <div><strong>Turntable Controller</strong>Scripted the rotation logic and a custom cursor to simulate "rubbing the disk" — the player physically scrubs the turntable with their mouse, which controls the game environment.</div>
+        </li>
+        <li data-num="02">
+          <div><strong>Beat Detection Pipeline</strong>Wrote a Python script to crawl the music beats from Bohemian Rhapsody and output a JSON file containing the beat array. Unity reads this file at runtime to synchronize enemy spawning with the music.</div>
+        </li>
+        <li data-num="03">
+          <div><strong>Dynamic Zone Spawning</strong>Three polygon collider regions define the Piano / Drum / Guitar zones. When the player enters a zone, the corresponding audio track becomes dominant, the background changes, and enemies of that instrument type begin spawning at random positions on beat.</div>
+        </li>
+        <li data-num="04">
+          <div><strong>Multi-Track Audio</strong>The original Bohemian Rhapsody track was separated into three instrument stems (piano, drums, guitar). Each stem is tied to its zone — giving players the feeling of "mixing" the song as they move through the level.</div>
+        </li>
+      </ul>
+
+      <!-- IMAGE: PDF Page 5 — Program presentation (Unity inspector, Python beat detection, code screenshots) -->
+      <div class="img-block">
+        <img src="code.jpg" alt="描述">
+        </div>
+        <div class="img-caption">Programming implementation</div>
+      </div>
+    </section>
+
+    <!-- 04 GAMEPLAY -->
+    <section>
+      <div class="section-num">04 — Gameplay</div>
+      <div class="section-title">In Action</div>
+
+      <p>The final game puts the player in the role of a DJ-commander: spin the turntable to navigate zones, shoot instrument monsters before they overwhelm the main character, and feel the rhythm of Bohemian Rhapsody shift as you fight. Each zone demands a different playstyle.</p>
+
+      <!-- IMAGE: PDF Page 6 — Game presentation screenshots -->
+      <div class="img-block">
+        <img src="gameplay.jpg" alt="描述">
+        </div>
+        <div class="img-caption">Gameplay screenshots</div>
+      </div>
+
+      <div class="video-grid">
+        <div class="video-card">
+          <div class="v-label">Video 01</div>
+          <div class="v-title">Gameplay Showcase — Part 1</div>
+          <a href="https://youtu.be/8h0CO78OoRo?si=n6FocQYo2-eCIL_c" target="_blank" class="v-btn">▶ Watch on YouTube</a>
+        </div>
+        <div class="video-card">
+          <div class="v-label">Video 02</div>
+          <div class="v-title">Gameplay Showcase — Part 2</div>
+          <a href="https://youtu.be/kZA2tAXKyN8" target="_blank" class="v-btn">▶ Watch on YouTube</a>
+        </div>
+        <div class="video-card behind full">
+          <div class="v-label">Behind the Scenes</div>
+          <div class="v-title">Programming & Mechanics Breakdown</div>
+          <a href="https://youtu.be/8Mc9fgsa83A" target="_blank" class="v-btn">▶ Watch on YouTube</a>
+        </div>
+      </div>
+
+       <div style="margin-top: 24px; text-align: center; border: 2px solid var(--ink); border-radius: 4px; padding: 32px; background: var(--ink);">
+        <p style="font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.2em; color: rgba(255,255,255,0.5); text-transform: uppercase; margin-bottom: 12px;">Play in Browser</p>
+        <p style="font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: #fff; letter-spacing: 0.04em; margin-bottom: 20px;">Try Rhythm Disc Now</p>
+        <a href="https://play.unity.com/en/games/323238ca-f000-42e6-ab12-6b2ece7c766b/rhythm-disc   " target="_blank" style="display: inline-block; background: var(--cyan); color: var(--ink); font-family: 'Space Mono', monospace; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.1em; text-decoration: none; padding: 14px 40px; border-radius: 2px; border: 2px solid var(--cyan); transition: opacity 0.2s;">▶ PLAY ON UNITY</a>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>

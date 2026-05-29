@@ -1,0 +1,506 @@
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supply Line — Jack He</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Noto+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold: #C8912A;
+      --red: #C0392B;
+      --ink: #1a1a1a;
+      --cream: #F5F0E8;
+      --dark-bg: #1E1510;
+      --card-border: #8B6914;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--cream);
+      color: var(--ink);
+      font-family: 'Noto Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 40px;
+      background: var(--dark-bg);
+      border-bottom: 3px solid var(--gold);
+    }
+    nav .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem; letter-spacing: 0.1em;
+      color: var(--gold);
+    }
+    nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem; color: var(--cream);
+      text-decoration: none; letter-spacing: 0.05em;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    nav a:hover { color: var(--gold); border-color: var(--gold); }
+
+    /* ── HERO ── */
+    #hero {
+      margin-top: 60px;
+      min-height: 60vh;
+      background: var(--dark-bg);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 80px 40px 60px;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 4px solid var(--gold);
+    }
+    #hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        -45deg,
+        transparent, transparent 40px,
+        rgba(200,145,42,0.04) 40px, rgba(200,145,42,0.04) 41px
+      );
+    }
+    #hero::after {
+      content: '三國';
+      position: absolute;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 30vw;
+      color: rgba(200,145,42,0.04);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+    .hero-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.2em;
+      color: var(--gold); text-transform: uppercase;
+      background: rgba(200,145,42,0.1);
+      border: 1px solid var(--gold);
+      padding: 4px 14px; border-radius: 2px;
+      margin-bottom: 24px;
+      position: relative; z-index: 1;
+    }
+    #hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.5rem, 10vw, 7rem);
+      letter-spacing: 0.04em;
+      color: #fff;
+      line-height: 0.95;
+      margin-bottom: 8px;
+      position: relative; z-index: 1;
+    }
+    #hero h1 span { color: var(--gold); }
+    .hero-subtitle {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.85rem; color: rgba(255,255,255,0.4);
+      margin-top: 20px; letter-spacing: 0.1em;
+      position: relative; z-index: 1;
+    }
+    .hero-roles {
+      display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;
+      margin-top: 28px;
+      position: relative; z-index: 1;
+    }
+    .role-chip {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.1em;
+      padding: 5px 14px; border-radius: 2px;
+      background: transparent; border: 1.5px solid;
+      text-transform: uppercase;
+    }
+    .role-chip.g { border-color: var(--gold); color: var(--gold); }
+    .role-chip.r { border-color: var(--red); color: var(--red); }
+    .role-chip.w { border-color: rgba(255,255,255,0.4); color: rgba(255,255,255,0.4); }
+
+    /* ── QUOTE BANNER ── */
+    .quote-banner {
+      background: var(--red);
+      padding: 28px 40px;
+      text-align: center;
+      border-bottom: 3px solid var(--ink);
+    }
+    .quote-banner p {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      letter-spacing: 0.05em;
+      color: #fff;
+    }
+
+    /* ── MAIN ── */
+    main { max-width: 1000px; margin: 0 auto; padding: 80px 40px 120px; }
+
+    .section-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.2em;
+      color: var(--red); text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      letter-spacing: 0.04em;
+      color: var(--ink);
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 3px solid var(--ink);
+    }
+
+    section { margin-bottom: 80px; }
+    p { font-size: 1rem; line-height: 1.8; color: #333; margin-bottom: 16px; }
+    strong { color: var(--ink); font-weight: 600; }
+
+    /* ── IMAGE BLOCK ── */
+    .img-block {
+      width: 100%;
+      margin: 32px 0;
+      border: 2px solid var(--ink);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .img-block img { width: 100%; display: block; }
+    .img-placeholder {
+      background: #ede8de;
+      padding: 60px 40px;
+      text-align: center;
+    }
+    .img-placeholder .img-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem; letter-spacing: 0.15em;
+      color: #999; text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .img-placeholder .img-desc {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem; color: #bbb;
+    }
+    .img-caption {
+      background: var(--dark-bg);
+      color: rgba(255,255,255,0.6);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.1em;
+      padding: 8px 16px;
+    }
+
+    /* ── GENERALS GRID ── */
+    .general-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      border: 2px solid var(--ink);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 32px 0;
+    }
+    .general-card {
+      padding: 28px 24px;
+    }
+    .general-card:nth-child(1) { background: #1E1510; border-right: 2px solid var(--ink); }
+    .general-card:nth-child(2) { background: #1A1020; border-right: 2px solid var(--ink); }
+    .general-card:nth-child(3) { background: #0F1A10; }
+    .general-card .g-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem; letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+    .general-card:nth-child(1) .g-name { color: var(--gold); }
+    .general-card:nth-child(2) .g-name { color: #AA88FF; }
+    .general-card:nth-child(3) .g-name { color: #44CCAA; }
+    .general-card .g-sub {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem; letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .general-card .g-ability {
+      font-size: 0.85rem; line-height: 1.6;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 0;
+    }
+    .general-card .g-ability strong { color: #fff; }
+
+    /* ── MECHANICS LIST ── */
+    .mechanic-list {
+      list-style: none;
+      border: 2px solid var(--ink);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 24px 0;
+    }
+    .mechanic-list li {
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 20px 24px;
+      border-bottom: 1.5px solid #ddd;
+      font-size: 0.95rem; line-height: 1.6; color: #333;
+    }
+    .mechanic-list li:last-child { border-bottom: none; }
+    .mechanic-list li::before {
+      content: attr(data-icon);
+      font-size: 1.4rem;
+      flex-shrink: 0; line-height: 1.2;
+    }
+    .mechanic-list li strong { color: var(--ink); display: block; margin-bottom: 2px; }
+
+    /* ── DEVLOG TIMELINE ── */
+    .timeline {
+      position: relative;
+      padding-left: 32px;
+      margin-top: 32px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute; left: 8px; top: 0; bottom: 0;
+      width: 2px; background: var(--gold);
+    }
+    .tl-entry {
+      position: relative;
+      margin-bottom: 40px;
+    }
+    .tl-entry::before {
+      content: '';
+      position: absolute; left: -28px; top: 6px;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--gold);
+      border: 2px solid var(--cream);
+    }
+    .tl-date {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.15em;
+      color: var(--red); text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .tl-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem; letter-spacing: 0.04em;
+      color: var(--ink); margin-bottom: 8px;
+    }
+    .tl-body {
+      font-size: 0.9rem; line-height: 1.7; color: #444;
+      margin-bottom: 0;
+    }
+
+    /* ── VIDEO ── */
+    .video-card {
+      border: 2px solid var(--ink);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 32px;
+    }
+    .video-card .v-label {
+      background: var(--dark-bg);
+      padding: 10px 16px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.5); text-transform: uppercase;
+    }
+    .video-card .v-title {
+      padding: 14px 16px 4px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem; letter-spacing: 0.04em;
+      color: var(--ink);
+    }
+    .video-card .v-desc {
+      padding: 0 16px 12px;
+      font-size: 0.85rem; color: #666;
+    }
+    .video-card .v-btn {
+      display: block; margin: 0 16px 16px;
+      background: var(--red); color: #fff;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem; letter-spacing: 0.1em;
+      text-decoration: none; text-align: center;
+      padding: 10px 20px; border-radius: 2px;
+      border: 2px solid var(--ink);
+      transition: background 0.2s, transform 0.1s;
+      cursor: pointer;
+    }
+    .video-card .v-btn:hover { background: #9B2B1E; transform: translateY(-1px); }
+    .v-placeholder {
+      background: #ede8de;
+      padding: 40px;
+      text-align: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem; color: #999;
+      letter-spacing: 0.1em;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      main { padding: 60px 20px 80px; }
+      .general-grid { grid-template-columns: 1fr; }
+      .general-card:nth-child(1),
+      .general-card:nth-child(2) { border-right: none; border-bottom: 2px solid var(--ink); }
+      nav { padding: 14px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">Jack He</div>
+    <a href="index.html">← Back to Home</a>
+  </nav>
+
+  <header id="hero">
+    <div class="hero-tag">Game Design Project · 2026</div>
+    <h1>Supply<br><span>Line</span></h1>
+    <p class="hero-subtitle">Three Kingdoms · Strategy Card Game · PvE</p>
+    <div class="hero-roles">
+      <span class="role-chip g">Game Design</span>
+      <span class="role-chip r">Programming</span>
+      <span class="role-chip w">Card Art</span>
+    </div>
+  </header>
+
+  <div class="quote-banner">
+    <p>"You are not just a commander — you are also a quartermaster. Win the battle. Feed your army."</p>
+  </div>
+
+  <main>
+
+    <!-- 01 CONCEPT -->
+    <section>
+      <div class="section-num">01 — Concept</div>
+      <div class="section-title">The Core Verb: To Provision</div>
+
+      <p>In most strategy card games like Hearthstone, units stay on the board for free after deployment. But in real history — especially during the Three Kingdoms period — logistical supply chains determined victory or defeat more than individual battles.</p>
+      <p>Supply Line is built around a single core verb: <strong>To Provision</strong>. Players are not only commanders but also quartermasters. Game tension stems not only from defeating enemies, but from <strong>sustaining your own army's supply lines</strong> while doing so. Every unit on the board costs upkeep each turn. Run out of grain — and your army collapses from within.</p>
+
+      <div class="img-block">
+        <img src="concept.jpg" alt="Game Overview">
+        <div class="img-caption">Game overview — general avatars, frontline slots, and supply counter</div>
+      </div>
+    </section>
+
+    <!-- 02 MECHANICS -->
+    <section>
+      <div class="section-num">02 — Core Mechanics</div>
+      <div class="section-title">How the Game Works</div>
+
+      <p>Three interlocking systems create a strategy experience unlike standard card games:</p>
+
+      <ul class="mechanic-list">
+        <li data-icon="⚔️">
+          <div><strong>Frontline Wall — 3 Slots</strong>Players deploy units onto a frontline with only 3 slots. You cannot attack the enemy General directly while they have any unit on the board — you must clear their troops first. This forces every player to think about board control before going for the kill.</div>
+        </li>
+        <li data-icon="🌾">
+          <div><strong>Upkeep & Supply</strong>Unlike Hearthstone where units stay for free, every unit in Supply Line costs grain each turn to keep alive. Food supplies do not auto-refresh — players must actively manage resources or watch their army starve and leave the board.</div>
+        </li>
+        <li data-icon="🛡️">
+          <div><strong>Summoning Sickness</strong>New units cannot attack on the turn they are deployed. Combined with the Turn 1 income penalty for the first player, this prevents one-turn-kill strategies and forces both players into a slower, more tactical game.</div>
+        </li>
+        <li data-icon="⚡">
+          <div><strong>Catch-up Abilities</strong>When a General falls to low HP, they automatically unlock a special ability. Liu Bei gains Taunt (forces enemies to target him, protecting weaker units). Cao Cao's next unit gains Rush (can attack immediately). These mechanics prevent death spirals and keep games competitive until the end.</div>
+        </li>
+      </ul>
+
+     
+      <div class="img-block">
+        <img src="board.jpg" alt="Game Overview">
+        <div class="img-caption">In-game board state — frontline slots, upkeep counter, and unit cards</div>
+      </div>
+    </section>
+
+    <!-- 03 GENERALS -->
+    <section>
+      <div class="section-num">03 — Generals</div>
+      <div class="section-title">Three Kingdoms Commanders</div>
+
+      <p>Each general gives the player a distinct combat identity and a unique catch-up ability that activates under pressure. Avatars were generated with AI; card art was drawn by hand.</p>
+
+      <div class="general-grid">
+        <div class="general-card">
+          <div class="g-name">Cao Cao</div>
+          <div class="g-sub">Kingdom of Wei</div>
+          <p class="g-ability"><strong>Catch-up:</strong> When damaged, Cao Cao's next deployed unit gains <strong>Rush</strong> — it can attack immediately on the turn it enters the board, enabling sudden aggressive counter-plays.</p>
+        </div>
+        <div class="general-card">
+          <div class="g-name">Liu Bei</div>
+          <div class="g-sub">Kingdom of Shu</div>
+          <p class="g-ability"><strong>Catch-up:</strong> When HP falls to 10 or below, Liu Bei's next unit automatically gains <strong>Taunt</strong> — enemies must attack it first, shielding weaker units and buying time to recover.</p>
+        </div>
+        <div class="general-card">
+          <div class="g-name">Sun Quan</div>
+          <div class="g-sub">Kingdom of Wu · Planned</div>
+          <p class="g-ability">Sun Quan is planned for the next development phase, adding a third distinct playstyle focused on naval logistics and rapid resource recovery.</p>
+        </div>
+      </div>
+
+     
+      <div class="img-block">
+        <img src="generals.jpg" alt="Game Overview">
+        <div class="img-caption">General avatars — designed with AI, showing HP, abilities, and stats</div>
+      </div>
+    </section>
+
+    <!-- 04 DEVLOG -->
+    <section>
+      <div class="section-num">04 — Development Log</div>
+      <div class="section-title">From Paper to Digital</div>
+
+      <p>Supply Line went through multiple design iterations — starting as a physical card prototype and evolving into a digital PvE game. Each playtest revealed a new problem that pushed the design forward.</p>
+
+      <div class="timeline">
+        <div class="tl-entry">
+          <div class="tl-date">Jan 17–26, 2026</div>
+          <div class="tl-title">Concept & Paper Prototype</div>
+          <p class="tl-body">Started from the verb "To Provision." Designed a paper prototype with 50–60 cards, grain tokens, and two generals. First playtests revealed three critical problems: the game ended too fast (OTK on Turn 1), the core supply mechanic was never triggered, and losing players had no way to fight back.</p>
+        </div>
+        <div class="tl-entry">
+          <div class="tl-date">Feb 21, 2026</div>
+          <div class="tl-title">Redesign — Frontline Wall + Catch-up</div>
+          <p class="tl-body">Introduced the 3-slot frontline wall, Summoning Sickness, the Turn 1 income penalty, and General catch-up abilities. These changes slowed the game down, forced players to engage with the supply system, and gave losing players a path back into the game.</p>
+        </div>
+        <div class="tl-entry">
+          <div class="tl-date">March 11, 2026</div>
+          <div class="tl-title">First Digital Prototype</div>
+          <p class="tl-body">Moved to Unity to handle the complex math of upkeep, HP, and resource tracking. The first digital version implemented 3–4 core mechanisms. The AI opponent was too weak for meaningful testing, but the digital format eliminated calculation errors that plagued the paper version.</p>
+        </div>
+        <div class="tl-entry">
+          <div class="tl-date">March 15, 2026</div>
+          <div class="tl-title">PvP → PvE Pivot</div>
+          <p class="tl-body">Originally designed as a PvP game, but networked multiplayer proved too complex to develop within the project timeline. Pivoting to PvE allowed better focus on balancing core mechanics and testing the supply system without the added complexity of network logic.</p>
+        </div>
+        <div class="tl-entry">
+          <div class="tl-date">April 19, 2026</div>
+          <div class="tl-title">All Mechanics Complete</div>
+          <p class="tl-body">All game mechanics implemented. Added general avatars (AI-generated) and hand-drawn card art. Final phase: bug fixes and UI polish.</p>
+        </div>
+      </div>
+    
+    </section>
+
+    <!-- 05 VIDEO -->
+    <section>
+      <div class="section-num">05 — Gameplay</div>
+      <div class="section-title">Watch It In Action</div>
+
+      <p>The video below shows a full game session — demonstrating the upkeep system, frontline management, and a catch-up ability triggering in the late game.</p>
+
+      <div class="video-card">
+        <div class="v-label">Video — Gameplay Demo</div>
+        <div class="v-title">Supply Line — Full Game Showcase</div>
+        <p class="v-desc">A complete PvE session showing supply management, frontline tactics, and General abilities.</p>
+        <a href="https://youtu.be/_XKB2ed7fns?si=-b8XlJ-oMYeFuPNd" target="_blank" class="v-btn">▶ Watch on YouTube</a>
+      </div>
+
+      <div style="margin-top: 24px; text-align: center; border: 2px solid var(--ink); border-radius: 4px; padding: 32px; background: var(--dark-bg);">
+        <p style="font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.2em; color: rgba(255,255,255,0.5); text-transform: uppercase; margin-bottom: 12px;">Play in Browser</p>
+        <p style="font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: #fff; letter-spacing: 0.04em; margin-bottom: 20px;">Try Supply Line Now</p>
+        <a href="https://play.unity.com/en/games/a53c3f61-a008-4e08-a3c7-25bcaca2ca05/supply-line" target="_blank" style="display: inline-block; background: var(--gold); color: var(--ink); font-family: 'Space Mono', monospace; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.1em; text-decoration: none; padding: 14px 40px; border-radius: 2px; border: 2px solid var(--gold); transition: opacity 0.2s;">▶ PLAY ON UNITY</a>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>
