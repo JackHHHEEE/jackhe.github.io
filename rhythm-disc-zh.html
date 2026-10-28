@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rhythm Disc — Jack He</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Noto+Sans:wght@400;600&family=Noto+Sans+SC:wght@400;600&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cyan: #00E5FF;
+      --pink: #FF3366;
+      --yellow: #FFE600;
+      --purple: #7209B7;
+      --ink: #1a1a1a;
+      --off-white: #F5F0E8;
+      --card-bg: #ffffff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--off-white);
+      color: var(--ink);
+      font-family: 'Noto Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 40px;
+      background: var(--ink);
+      border-bottom: 3px solid var(--cyan);
+    }
+    nav .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem; letter-spacing: 0.1em;
+      color: var(--cyan);
+    }
+    nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem; color: var(--off-white);
+      text-decoration: none; letter-spacing: 0.05em;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    nav a:hover { color: var(--cyan); border-color: var(--cyan); }
+
+    /* ── HERO ── */
+    #hero {
+      margin-top: 60px;
+      min-height: 60vh;
+      background: var(--ink);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 80px 40px 60px;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 4px solid var(--cyan);
+    }
+    #hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent, transparent 40px,
+        rgba(0,229,255,0.04) 40px, rgba(0,229,255,0.04) 41px
+      );
+    }
+    .hero-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.2em;
+      color: var(--cyan); text-transform: uppercase;
+      background: rgba(0,229,255,0.1);
+      border: 1px solid var(--cyan);
+      padding: 4px 14px; border-radius: 2px;
+      margin-bottom: 24px;
+    }
+    #hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.5rem, 10vw, 7rem);
+      letter-spacing: 0.04em;
+      color: #fff;
+      line-height: 0.95;
+      margin-bottom: 8px;
+    }
+    #hero h1 span { color: var(--cyan); }
+    .hero-subtitle {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.85rem; color: rgba(255,255,255,0.5);
+      margin-top: 20px; letter-spacing: 0.1em;
+    }
+    .hero-roles {
+      display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;
+      margin-top: 28px;
+    }
+    .role-chip {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.1em;
+      padding: 5px 14px; border-radius: 2px;
+      background: transparent; border: 1.5px solid;
+      text-transform: uppercase;
+    }
+    .role-chip.c { border-color: var(--cyan); color: var(--cyan); }
+    .role-chip.p { border-color: var(--pink); color: var(--pink); }
+    .role-chip.y { border-color: var(--yellow); color: var(--yellow); }
+
+    /* ── QUOTE ── */
+    .quote-banner {
+      background: var(--pink);
+      padding: 28px 40px;
+      text-align: center;
+      border-bottom: 3px solid var(--ink);
+    }
+    .quote-banner p {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      letter-spacing: 0.05em;
+      color: #fff;
+    }
+
+    /* ── MAIN CONTENT ── */
+    main { max-width: 1000px; margin: 0 auto; padding: 80px 40px 120px; }
+
+    /* section label */
+    .section-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.2em;
+      color: var(--pink); text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      letter-spacing: 0.04em;
+      color: var(--ink);
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 3px solid var(--ink);
+    }
+
+    section { margin-bottom: 80px; }
+
+    p { font-size: 1rem; line-height: 1.8; color: #333; margin-bottom: 16px; }
+    strong { color: var(--ink); font-weight: 600; }
+
+    /* ── IMAGE PLACEHOLDER ── */
+    .img-block {
+      width: 100%;
+      margin: 32px 0;
+      border: 2px solid var(--ink);
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+    .img-block img {
+      width: 100%; display: block;
+    }
+    .img-placeholder {
+      background: #e8e4dc;
+      padding: 60px 40px;
+      text-align: center;
+    }
+    .img-placeholder .img-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem; letter-spacing: 0.15em;
+      color: #888; text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .img-placeholder .img-desc {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem; color: #aaa;
+    }
+    .img-caption {
+      background: var(--ink);
+      color: rgba(255,255,255,0.7);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.1em;
+      padding: 8px 16px;
+    }
+
+    /* ── MECHANICS GRID ── */
+    .mechanic-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      border: 2px solid var(--ink);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 32px 0;
+    }
+    .mechanic-card {
+      padding: 28px 24px;
+      position: relative;
+    }
+    .mechanic-card:nth-child(1) { background: #E8F7FF; border-right: 2px solid var(--ink); }
+    .mechanic-card:nth-child(2) { background: #1a1a1a; border-right: 2px solid var(--ink); }
+    .mechanic-card:nth-child(3) { background: #FFF3E0; }
+    .mechanic-card .m-icon {
+      font-size: 2rem; margin-bottom: 12px; display: block;
+    }
+    .mechanic-card .m-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem; letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+    .mechanic-card:nth-child(1) .m-name { color: #0077AA; }
+    .mechanic-card:nth-child(2) .m-name { color: var(--cyan); }
+    .mechanic-card:nth-child(3) .m-name { color: #CC4400; }
+    .mechanic-card .m-desc {
+      font-size: 0.85rem; line-height: 1.6;
+      margin-bottom: 0;
+    }
+    .mechanic-card:nth-child(1) .m-desc { color: #444; }
+    .mechanic-card:nth-child(2) .m-desc { color: rgba(255,255,255,0.7); }
+    .mechanic-card:nth-child(3) .m-desc { color: #444; }
+
+    /* ── TECH LIST ── */
+    .tech-list {
+      list-style: none;
+      border: 2px solid var(--ink);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 24px 0;
+    }
+    .tech-list li {
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 20px 24px;
+      border-bottom: 1.5px solid #ddd;
+      font-size: 0.95rem; line-height: 1.6; color: #333;
+    }
+    .tech-list li:last-child { border-bottom: none; }
+    .tech-list li::before {
+      content: attr(data-num);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem; color: var(--purple);
+      flex-shrink: 0; line-height: 1.2;
+    }
+    .tech-list li strong { color: var(--ink); display: block; margin-bottom: 2px; }
+
+    /* ── VIDEO SECTION ── */
+    .video-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 32px;
+    }
+    @media (max-width: 600px) { .video-grid { grid-template-columns: 1fr; } }
+    .video-card {
+      border: 2px solid var(--ink);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .video-card .v-label {
+      background: var(--ink);
+      padding: 10px 16px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.6); text-transform: uppercase;
+    }
+    .video-card .v-title {
+      padding: 14px 16px 4px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem; letter-spacing: 0.04em;
+      color: var(--ink);
+    }
+    .video-card .v-btn {
+      display: block; margin: 12px 16px 16px;
+      background: var(--pink); color: #fff;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem; letter-spacing: 0.1em;
+      text-decoration: none; text-align: center;
+      padding: 10px 20px; border-radius: 2px;
+      border: 2px solid var(--ink);
+      transition: background 0.2s, transform 0.1s;
+    }
+    .video-card .v-btn:hover { background: #cc2255; transform: translateY(-1px); }
+    .video-card.behind .v-btn { background: var(--purple); }
+    .video-card.behind .v-btn:hover { background: #5a0090; }
+    .video-card.full { grid-column: 1 / -1; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      main { padding: 60px 20px 80px; }
+      .mechanic-grid { grid-template-columns: 1fr; }
+      .mechanic-card:nth-child(1),
+      .mechanic-card:nth-child(2) { border-right: none; border-bottom: 2px solid var(--ink); }
+      nav { padding: 14px 20px; }
+    }
+    .nav-right { display: flex; gap: 24px; }
+
+    /* ── 中文字体：英文字母仍走原字体，中文字落到后面的中文字体 ── */
+    body {
+      font-family: 'Noto Sans', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    }
+    nav .logo, #hero h1, .quote-banner p, .section-title,
+    .mechanic-card .m-name, .img-placeholder .img-desc,
+    .tech-list li::before, .video-card .v-title, .zh-display {
+      font-family: 'Bebas Neue', 'ZCOOL QingKe HuangYou', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    }
+    nav a, .hero-tag, .hero-subtitle, .role-chip, .section-num,
+    .img-placeholder .img-label, .img-caption,
+    .video-card .v-label, .video-card .v-btn, .zh-mono {
+      font-family: 'Space Mono', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', monospace;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">Jack He</div>
+    <div class="nav-right">
+      <a href="index-zh.html">← 返回首页</a>
+      <a href="rhythm-disc.html" lang="en">EN</a>
+    </div>
+  </nav>
+
+  <header id="hero">
+    <div class="hero-tag">游戏设计项目 · 2024</div>
+    <h1>Rhythm<br><span>Disc</span></h1>
+    <p class="hero-subtitle">单人 · 电子射击 · 音乐</p>
+    <div class="hero-roles">
+      <span class="role-chip c">游戏设计</span>
+      <span class="role-chip p">程序</span>
+      <span class="role-chip y">音频设计</span>
+    </div>
+  </header>
+
+  <div class="quote-banner">
+    <p>“一款反转传统射击设计的游戏——让玩家亲身体验当 DJ 的感觉。”</p>
+  </div>
+
+  <main>
+
+    <!-- 01 概念 -->
+    <section>
+      <div class="section-num">01 — 概念</div>
+      <div class="section-title">角色与边界的反转</div>
+
+      <p>受《游戏设计艺术》（<em>The Art of Game Design</em>）启发，我想打破“玩家只能控制主角”的惯例。在大多数射击游戏里，你就是英雄——可如果你控制的是英雄<strong>周围</strong>的一切呢？</p>
+      <p>在 Rhythm Disc 中，玩家控制的是唱盘（也就是环境）和场景里的乐器怪物，间接帮助主角活下去。核心的紧张感来自同时兼顾音乐和战场。</p>
+
+      <!-- 图：PDF 第 3 页——头脑风暴图（关键元素图 + 角色反转示意） -->
+      <div class="img-block">
+        <img src="brainstorm.jpg" alt="头脑风暴图">
+        <div class="img-caption">头脑风暴图</div>
+      </div>
+    </section>
+
+    <!-- 02 音乐机制 -->
+    <section>
+      <div class="section-num">02 — 核心机制</div>
+      <div class="section-title">音乐系统</div>
+
+      <p>游戏的舞台是一台唱片机。怪物以乐器为原型——钢琴、吉他和鼓，各自对应唱盘上的一个区域。玩家进入不同区域时，对应乐器的音轨会成为主导，同时切换到另一种子弹。</p>
+
+      <div class="mechanic-grid">
+        <div class="mechanic-card">
+          <span class="m-icon">🎹</span>
+          <div class="m-name">钢琴区</div>
+          <p class="m-desc">柔和的配色，舒缓的节奏。敌人移动较慢——但可别掉以轻心。</p>
+        </div>
+        <div class="mechanic-card">
+          <span class="m-icon">🥁</span>
+          <div class="m-name">鼓区</div>
+          <p class="m-desc">炽烈的橙红色调，高强度的鼓点。敌人刷新频率急剧上升。</p>
+        </div>
+        <div class="mechanic-card">
+          <span class="m-icon">🎸</span>
+          <div class="m-name">吉他区</div>
+          <p class="m-desc">硬朗又带棱角，中速的混乱。敌人伤害更高，需要精准把握时机。</p>
+        </div>
+      </div>
+
+      <!-- 图：PDF 第 4 页——美术展示（场景美术 + 怪物设计 + 角色设计） -->
+      <div class="img-block">
+        <img src="art.jpg" alt="美术展示：场景、怪物与角色设计">
+        <div class="img-caption">美术展示</div>
+      </div>
+    </section>
+
+    <!-- 03 程序 -->
+    <section>
+      <div class="section-num">03 — 程序</div>
+      <div class="section-title">实现原理</div>
+
+      <p>所有核心系统都用 Unity（C#）实现。技术上最有意思的部分，是让敌人的生成与音乐节拍实时同步。</p>
+
+      <ul class="tech-list">
+        <li data-num="01">
+          <div><strong>唱盘控制器</strong>编写了唱盘的旋转逻辑和自定义光标，模拟“搓碟”——玩家用鼠标真实地拨动唱盘，以此控制游戏环境。</div>
+        </li>
+        <li data-num="02">
+          <div><strong>节拍检测流程</strong>用 Python 脚本提取《Bohemian Rhapsody》的节拍，输出一个包含节拍数组的 JSON 文件。Unity 在运行时读取这个文件，让敌人的生成与音乐同步。</div>
+        </li>
+        <li data-num="03">
+          <div><strong>动态区域刷怪</strong>三个多边形碰撞体划出钢琴 / 鼓 / 吉他三个区域。玩家进入某个区域后，对应音轨成为主导，背景随之变化，该乐器类型的敌人开始踩着节拍在随机位置生成。</div>
+        </li>
+        <li data-num="04">
+          <div><strong>多音轨音频</strong>把《Bohemian Rhapsody》原曲分离成钢琴、鼓、吉他三条乐器分轨，每条分轨绑定一个区域——玩家在关卡中移动时，就像在亲手给这首歌“混音”。</div>
+        </li>
+      </ul>
+
+      <!-- 图：PDF 第 5 页——程序展示（Unity Inspector、Python 节拍检测、代码截图） -->
+      <div class="img-block">
+        <img src="code.jpg" alt="程序实现：Unity Inspector、Python 节拍检测与代码截图">
+        <div class="img-caption">程序实现</div>
+      </div>
+    </section>
+
+    <!-- 04 玩法 -->
+    <section>
+      <div class="section-num">04 — 玩法</div>
+      <div class="section-title">实机演示</div>
+
+      <p>在最终的游戏里，玩家扮演一位 DJ 指挥官：转动唱盘穿梭于各个区域，在乐器怪物淹没主角之前把它们击落，并在战斗中感受《Bohemian Rhapsody》节奏的变化。每个区域都需要不同的打法。</p>
+
+      <!-- 图：PDF 第 6 页——游戏截图 -->
+      <div class="img-block">
+        <img src="gameplay.jpg" alt="游戏截图">
+        <div class="img-caption">游戏截图</div>
+      </div>
+
+      <div class="video-grid">
+        <div class="video-card">
+          <div class="v-label">视频 01</div>
+          <div class="v-title">实机演示（上）</div>
+          <a href="https://youtu.be/8h0CO78OoRo?si=n6FocQYo2-eCIL_c" target="_blank" class="v-btn">▶ 在 YouTube 观看</a>
+        </div>
+        <div class="video-card">
+          <div class="v-label">视频 02</div>
+          <div class="v-title">实机演示（下）</div>
+          <a href="https://youtu.be/kZA2tAXKyN8" target="_blank" class="v-btn">▶ 在 YouTube 观看</a>
+        </div>
+        <div class="video-card behind full">
+          <div class="v-label">幕后花絮</div>
+          <div class="v-title">程序与机制详解</div>
+          <a href="https://youtu.be/8Mc9fgsa83A" target="_blank" class="v-btn">▶ 在 YouTube 观看</a>
+        </div>
+      </div>
+
+       <div style="margin-top: 24px; text-align: center; border: 2px solid var(--ink); border-radius: 4px; padding: 32px; background: var(--ink);">
+        <p class="zh-mono" style="font-size: 0.7rem; letter-spacing: 0.2em; color: rgba(255,255,255,0.5); text-transform: uppercase; margin-bottom: 12px;">在浏览器中游玩</p>
+        <p class="zh-display" style="font-size: 1.8rem; color: #fff; letter-spacing: 0.04em; margin-bottom: 20px;">立即试玩 Rhythm Disc</p>
+        <a class="zh-mono" href="https://play.unity.com/en/games/323238ca-f000-42e6-ab12-6b2ece7c766b/rhythm-disc" target="_blank" style="display: inline-block; background: var(--cyan); color: var(--ink); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.1em; text-decoration: none; padding: 14px 40px; border-radius: 2px; border: 2px solid var(--cyan); transition: opacity 0.2s;">▶ 在 UNITY PLAY 上游玩</a>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>

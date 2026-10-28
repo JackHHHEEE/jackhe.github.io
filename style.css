@@ -6,6 +6,11 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* 中文页面：英文仍用 Segoe UI，中文字落到系统中文字体 */
+html[lang="zh-CN"] * {
+    font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+}
+
 body {
     background-color: #f8f9fa; /* 干净的浅灰白背景，不刺眼 */
     color: #1a1a1a; /* 极深的灰色作为正文，保证高对比度 */
