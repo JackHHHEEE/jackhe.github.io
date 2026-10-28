@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Supply Line — 何正宇</title>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Noto+Sans:wght@400;600&family=Noto+Sans+SC:wght@400;600&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Noto+Sans:wght@400;600&family=Noto+Sans+SC:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --gold: #C8912A;
@@ -350,7 +350,10 @@
     nav .logo, #hero h1, .quote-banner p, .section-title,
     .img-placeholder .img-desc, .general-card .g-name,
     .tl-title, .video-card .v-title, .zh-display {
-      font-family: 'Bebas Neue', 'ZCOOL QingKe HuangYou', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      font-family: 'Bebas Neue', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      /* 中文用粗体；Bebas 只有常规字重，关掉合成加粗，英文保持原样 */
+      font-weight: 700;
+      font-synthesis: none;
     }
     nav a, .hero-tag, .hero-subtitle, .role-chip, .section-num,
     .img-placeholder .img-label, .img-caption, .general-card .g-sub,
